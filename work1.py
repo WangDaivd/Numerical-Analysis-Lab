@@ -1,5 +1,3 @@
-# 依赖安装：pip install numpy matplotlib scipy
-
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.interpolate import CubicSpline
@@ -10,7 +8,14 @@ def original_curve(x):
 
 x_fine = np.linspace(-5, 5, 1000)
 y_true = original_curve(x_fine)
-x_nodes = np.linspace(-5, 5, 11)
+
+# 生成节点
+n = 20
+x_nodes = np.linspace(-5, 5, n)
+
+# 确保x_nodes严格递增
+x_nodes = np.sort(x_nodes)
+
 y_nodes = original_curve(x_nodes)
 
 # 拉格朗日插值实现
@@ -36,7 +41,7 @@ y_linear = np.interp(x_fine, x_nodes, y_nodes)
 
 # 误差计算
 def calculate_errors(y_true, y_pred):
-    mse = np.mean((y_true - y_pred)**2)
+    mse = np.mean((y_true - y_pred) ** 2)
     max_error = np.max(np.abs(y_true - y_pred))
     return mse, max_error
 
